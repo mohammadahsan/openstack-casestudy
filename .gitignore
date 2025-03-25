@@ -1,7 +1,8 @@
 # Standard .gitignore for Terraform projects
 gitignore_content = """# Local .terraform directories
 .terraform/
-
+terraform-openstack-ec2/.terraform/
+terraform-openstack-ec2/.terraform.lock.hcl
 # .tfstate files
 *.tfstate
 *.tfstate.*
