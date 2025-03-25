@@ -31,6 +31,7 @@ aws sts get-caller-identity
 
 Make sure these files are present:
 
+```
 terraform-openstack-ec2/
 ├── main.tf
 ├── variables.tf
@@ -38,6 +39,7 @@ terraform-openstack-ec2/
 ├── terraform.tfvars
 ├── deploy.sh
 └── destroy.sh
+```
 
 Make the shell scripts executable:
 
