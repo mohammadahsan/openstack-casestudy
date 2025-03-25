@@ -37,14 +37,14 @@ terraform-openstack-ec2/
 ├── variables.tf
 ├── outputs.tf
 ├── terraform.tfvars
-├── deploy.sh
+├── provision.sh
 └── destroy.sh
 ```
 
 Make the shell scripts executable:
 
 ```bash
-chmod +x deploy.sh destroy.sh
+chmod +x provision.sh destroy.sh
 ```
 
 ---
@@ -54,7 +54,7 @@ chmod +x deploy.sh destroy.sh
 Run:
 
 ```bash
-./deploy.sh
+./provision.sh
 ```
 
 This will:
