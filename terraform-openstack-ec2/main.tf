@@ -48,6 +48,7 @@ resource "aws_security_group" "openstack_sg" {
 }
 
 resource "aws_instance" "openstack_ec2" {
+  count                       = var.instance_count
   ami                         = var.ami
   instance_type               = var.instance_type
   subnet_id                   = data.aws_subnet.default.id
@@ -61,16 +62,17 @@ resource "aws_instance" "openstack_ec2" {
   }
 
   tags = {
-    Name = var.instance_name
+    Name = "${var.instance_name}-${count.index + 1}"
   }
 }
 
 resource "aws_route53_record" "openstack_dns" {
+  count   = var.instance_count
   zone_id = data.aws_route53_zone.selected.zone_id
-  name    = "${var.record_name}.${var.domain_name}"
+  name    = "openstack${count.index + 1}.${var.domain_name}"
   type    = "A"
   ttl     = 300
-  records = [aws_instance.openstack_ec2.public_ip]
+  records = [aws_instance.openstack_ec2[count.index].public_ip]
 }
 
 data "aws_route53_zone" "selected" {

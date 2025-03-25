@@ -28,8 +28,8 @@ terraform.rc
 *.log
 """
 
-# myReadmeFile
-
+# MyFiles
+CS_Senior System Engineer_2025.pdf
 myreadme.md
 
 gitignore_path = Path("/mnt/data/.gitignore")

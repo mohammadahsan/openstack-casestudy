@@ -1,0 +1,8 @@
+---
+- name: Setup OpenStack with DevStack and test connectivity
+  hosts: openstack
+  become: true
+
+  roles:
+    - ping
+    #- devstack

@@ -1,0 +1,27 @@
+---
+- name: Install dependencies
+  apt:
+    name:
+      - git
+      - net-tools
+      - python3-pip
+    update_cache: yes
+
+- name: Clone DevStack repo
+  git:
+    repo: https://opendev.org/openstack/devstack.git
+    dest: /home/ubuntu/devstack
+    version: master
+  become_user: ubuntu
+
+- name: Copy local.conf
+  template:
+    src: local.conf.j2
+    dest: /home/ubuntu/devstack/local.conf
+  become_user: ubuntu
+
+- name: Run DevStack stack.sh
+  shell: ./stack.sh
+  args:
+    chdir: /home/ubuntu/devstack
+  become_user: ubuntu

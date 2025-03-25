@@ -1,0 +1,3 @@
+[openstack]
+openstack1.opsbyak.com ansible_user=ubuntu
+openstack2.opsbyak.com ansible_user=ubuntu

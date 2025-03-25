@@ -1,0 +1,3 @@
+---
+- name: Ping the instance
+  ansible.builtin.ping:
