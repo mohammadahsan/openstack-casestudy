@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>OpenStack Automation</title>
+    <style>
+        body { font-family: sans-serif; padding: 20px; }
+        button { margin: 10px; padding: 10px 20px; }
+        pre { background: #f5f5f5; padding: 10px; border: 1px solid #ccc; overflow: auto; }
+    </style>
+</head>
+<body>
+    <h1>🚀 OpenStack Automation</h1>
+    <form method="post">
+        {% csrf_token %}
+        <button name="action" value="provision">Provision Infrastructure</button>
+        <button name="action" value="destroy">Destroy Infrastructure</button>
+        <button name="action" value="run_ansible">Run Ansible</button>
+    </form>
+
+    <h2>Provision Output</h2>
+    <pre>{{ terraform_output }}</pre>
+
+    <h2>Destroy Output</h2>
+    <pre>{{ destroy_output }}</pre>
+
+    <h2>Ansible Output</h2>
+    <pre>{{ ansible_output }}</pre>
+
+    <h2>EC2 Instances</h2>
+    <pre>{{ ec2_instances_output }}</pre>
+
+    <h3>OpenStack Links</h3>
+    <ul>
+        <li><a href="https://openstack1.opsbyak.com" target="_blank">openstack1.opsbyak.com</a></li>
+        <li><a href="https://openstack2.opsbyak.com" target="_blank">openstack2.opsbyak.com</a></li>
+    </ul>
+</body>
+</html>
