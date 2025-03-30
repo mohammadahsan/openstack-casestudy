@@ -2,20 +2,17 @@ import os
 import subprocess
 from django.shortcuts import render
 
-# Directories to store logs and statuses
 BASE_DIR = "/home/ubuntu/openstack-casestudy/automation"
 LOG_DIR = os.path.join(BASE_DIR, "logs")
 STATUS_DIR = os.path.join(LOG_DIR, "status")
 
-# Ensure dirs exist
 os.makedirs(LOG_DIR, exist_ok=True)
 os.makedirs(STATUS_DIR, exist_ok=True)
 
-def run_in_background(name, command, cwd):
+def run_in_background(name, script_path, cwd):
     status_file = os.path.join(STATUS_DIR, f"{name}_status.txt")
-    log_file = os.path.join(LOG_DIR, f"{name}.log")
 
-    # Prevent re-run if already running
+    # Avoid re-running if already marked running
     if os.path.exists(status_file):
         with open(status_file) as f:
             if f.read().strip() == "running":
@@ -25,18 +22,15 @@ def run_in_background(name, command, cwd):
     with open(status_file, "w") as f:
         f.write("running")
 
-    # Start background process
-    with open(log_file, "w") as out:
-        subprocess.Popen(
-            command,
-            cwd=cwd,
-            stdout=out,
-            stderr=subprocess.STDOUT,
-        )
+    # Run script (script handles its own logging)
+    subprocess.Popen(
+        ["/usr/bin/bash", script_path],
+        cwd=cwd
+    )
 
     return "started"
 
-def tail_log(name, lines=50):
+def tail_log(name, lines=10):
     path = os.path.join(LOG_DIR, f"{name}.log")
     if os.path.exists(path):
         with open(path) as f:
@@ -47,7 +41,7 @@ def get_ec2_list():
     try:
         process = subprocess.Popen(
             [
-                "/usr/local/bin/aws", "ec2", "describe-instances",
+                "/usr/bin/aws", "ec2", "describe-instances",
                 "--query", "Reservations[*].Instances[*].[InstanceId,InstanceType,State.Name,PublicIpAddress,Tags[?Key=='Name'].Value | [0]]",
                 "--output", "table"
             ],
@@ -70,19 +64,19 @@ def automation_view(request):
         if action == "provision":
             terraform_status = run_in_background(
                 "terraform",
-                ["/usr/bin/bash", "provision.sh"],
+                "provision.sh",
                 "/home/ubuntu/openstack-casestudy/terraform-openstack-ec2"
             )
         elif action == "destroy":
             destroy_status = run_in_background(
                 "destroy",
-                ["/usr/bin/bash", "destroy.sh"],
+                "destroy.sh",
                 "/home/ubuntu/openstack-casestudy/terraform-openstack-ec2"
             )
         elif action == "run_ansible":
             ansible_status = run_in_background(
                 "ansible",
-                ["/usr/bin/ansible-playbook", "playbook.yaml"],
+                "run_ansible.sh",  # optional wrapper, or use playbook.yaml
                 "/home/ubuntu/openstack-casestudy/ansible"
             )
 
@@ -95,5 +89,5 @@ def automation_view(request):
         "destroy_output": tail_log("destroy"),
         "ansible_status": ansible_status,
         "ansible_output": tail_log("ansible"),
-        "ec2_instances_output": ec2_instances_output
+        "ec2_instances_output": ec2_instances_output,
     })
