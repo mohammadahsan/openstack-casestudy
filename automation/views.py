@@ -41,7 +41,7 @@ def get_ec2_list():
     try:
         process = subprocess.Popen(
             [
-                "/usr/bin/aws", "ec2", "describe-instances",
+                "/usr/local/bin/aws", "ec2", "describe-instances",
                 "--query", "Reservations[*].Instances[*].[InstanceId,InstanceType,State.Name,PublicIpAddress,Tags[?Key=='Name'].Value | [0]]",
                 "--output", "table"
             ],
