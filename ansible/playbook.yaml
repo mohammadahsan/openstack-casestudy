@@ -5,14 +5,14 @@
   roles:
     - ping
 
-# - name: Set up DevStack Controller
-#   hosts: controller
-#   become: true
-#   roles:
-#     - devstack_controller
+- name: Set up DevStack Controller
+  hosts: controller
+  become: true
+  roles:
+    - devstack_controller
 
-# - name: Set up DevStack Compute
-#   hosts: compute
-#   become: true
-#   roles:
-#     - devstack_compute
+- name: Set up DevStack Compute
+  hosts: compute
+  become: true
+  roles:
+    - devstack_compute
