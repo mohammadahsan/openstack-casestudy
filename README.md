@@ -120,7 +120,7 @@ ansible/
 ├── group_vars/
 │   └── all.yml
 ├── inventory
-├── install_devstack_split.yml
+├── playbook.yaml.
 └── roles/
     ├── ping/
     │   └── tasks/main.yml
@@ -134,7 +134,7 @@ ansible/
 
 ---
 
-### Playbook: `playbook.yml`
+### Playbook: `playbook.yaml`
 
 This playbook does the following:
 
