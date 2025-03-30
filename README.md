@@ -7,6 +7,9 @@ This repository contains for provisioning of OpenStack on EC2 instance using Ans
 ### 🖱️ How to Use the Dashboard
 
 Once the dashboard is running and accessible at [https://automation.opsbyak.com](https://automation.opsbyak.com), here's how to use it:
+To Avoid Cost on my end, I created this small dashboard to spin up infrastrucutre and destroy on demand for.
+
+![Dashboard](images/dashboard.png)
 
 ---
 
@@ -65,7 +68,6 @@ These open in a new tab for convenience.
 #### ⚠️ Notes
 
 - No logs are shown in the UI by design — this is a **status-only dashboard**.
-- If you need debug info, check system logs or backend scripts.
 
 ---
 ## Infrastructure Deployment
@@ -76,3 +78,109 @@ For full provisioning instructions and details, please refer to:
 
 ## OpenStack Deployment
 
+This setup provisions and configures a two-node OpenStack environment using Ansible. The architecture splits the OpenStack services across two EC2 instances for simulated high availability and scalability.
+
+---
+
+### Node Roles
+
+#### 1. Controller Node (`openstack1.opsbyak.com`)
+- **Role:** Controller
+- **Services Installed:**
+  - Keystone (Identity)
+  - Glance (Image Service)
+  - Nova API + Scheduler
+  - Neutron (Controller-side)
+  - Horizon (Dashboard)
+  - Trove (Database Service)
+  - Swift (Object Storage)
+
+#### 2. Compute Node (`openstack2.opsbyak.com`)
+- **Role:** Compute
+- **Services Installed:**
+  - Nova Compute
+  - Neutron Agent
+
+---
+
+## Ansible Directory Structure
+
+```
+ansible/
+├── ansible.cfg
+├── group_vars/
+│   └── all.yml
+├── inventory
+├── install_devstack_split.yml
+└── roles/
+    ├── ping/
+    │   └── tasks/main.yml
+    ├── devstack_controller/
+    │   ├── tasks/main.yml
+    │   └── templates/local.conf.j2
+    └── devstack_compute/
+        ├── tasks/main.yml
+        └── templates/local.conf.j2
+```
+
+---
+
+## Playbook: `playbook.yml`
+
+This playbook does the following:
+
+1. **Ping Test (all hosts)**: Verifies both controller and compute nodes are reachable via SSH.
+2. **Controller Setup**: Installs dependencies, clones DevStack, applies the controller-specific local.conf, and runs stack.sh.
+3. **Compute Setup**: Installs dependencies, clones DevStack, applies the compute-specific local.conf, and runs stack.sh.
+
+---
+
+## Inventory Configuration
+
+```ini
+[controller]
+openstack1.opsbyak.com ansible_user=ubuntu
+
+[compute]
+openstack2.opsbyak.com ansible_user=ubuntu
+```
+
+---
+
+## DevStack Configuration Templates
+
+### Controller (`local.conf.j2`)
+- Enables full services like Nova API, Glance, Neutron, Trove, Swift, Horizon
+- `HOST_IP` is the public IP of the controller
+- `MULTI_HOST=true` is enabled
+
+### Compute (`local.conf.j2`)
+- Enables Nova Compute and Neutron Agent only
+- `SERVICE_HOST` is the controller’s public IP
+- `HOST_IP` is the compute node's public IP
+
+---
+
+## How to Run
+
+```bash
+./run_ansible.sh
+```
+
+Ensure:
+- Both DNS entries (`openstack1.opsbyak.com`, `openstack2.opsbyak.com`) resolve correctly
+- Internal traffic is allowed between EC2s
+- SSH access is configured in `group_vars/all.yml`
+
+---
+
+## Outcome
+
+- Full OpenStack environment deployed
+- Simulated high-availability and scalability using two nodes
+- Services split effectively between controller and compute
+
+---
+
+Once Infra provisioned simply running ansible script will ping pong status (This was done for testing purpose only): 
+![ansible](images/ansible.png)
