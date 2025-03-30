@@ -7,7 +7,7 @@ This repository contains for provisioning of OpenStack on EC2 instance using Ans
 ### 🖱️ How to Use the Dashboard
 To Avoid Cost on my end, I created this small dashboard to spin up infrastrucutre and destroy on demand for.
 
-- The whole infra gets removed after 5 hours if its in running state.
+- The whole infra gets removed after 6 hours as cronjobs run at UTC `00:00` `06:00` `12:00` `18:00`
 - If you see the status not started, you just need to click once 
   - Provision Infrastructure
   - The EC2 instance list will populate in some time, and with clear instructions that its provisioned.
