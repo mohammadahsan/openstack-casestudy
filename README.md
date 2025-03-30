@@ -9,7 +9,7 @@ source automation/bin/activate
 pip install --upgrade pip
 pip install -r requirements.txt
 pip install gunicorn
-
+gunicorn --chdir /home/ubuntu/openstack-casestudy/automation -b 127.0.0.1:9000 wsgi
 
 
 

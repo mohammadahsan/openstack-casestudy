@@ -42,3 +42,9 @@ variable "your_ip" {
   description = "Your public IP address"
   default     = "20.161.75.209" # Replace with your actual public IP
 }
+
+variable "instance_count" {
+  description = "Number of EC2 instances to create"
+  type        = number
+  default     = 2
+}
