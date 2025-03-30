@@ -6,6 +6,16 @@ This repository contains for provisioning of OpenStack on EC2 instance using Ans
 
 ### 🖱️ How to Use the Dashboard
 To Avoid Cost on my end, I created this small dashboard to spin up infrastrucutre and destroy on demand for.
+
+- The whole infra gets removed after 5 hours if its in running state.
+- If you see the status not started, you just need to click once 
+  - Provision Infrastructure
+  - The EC2 instance list will populate in some time, and with clear instructions that its provisioned.
+  - You click once only Run Ansible this will deploy the complete 2 node openstack environment.
+- After 5 hours the terraform destroy will automatically execute.
+
+The dashbaord is for my own self learning and cost saving so I can just provision and destroy using my phone as well easily.
+
 Dashboard is running and accessible at [https://automation.opsbyak.com](https://automation.opsbyak.com), here's how to use it:
 
 ![Dashboard](images/dashboard.png)
