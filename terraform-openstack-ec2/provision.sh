@@ -10,4 +10,4 @@ export PATH=$PATH:/usr/bin:/usr/local/bin
 #/usr/bin/terraform apply -var-file="terraform.tfvars" -auto-approve
 
 echo "provisioned" > "$STATUS_FILE"
-echo "" > "$DESTROY_STATUS"
+echo "available to destroy" > "$DESTROY_STATUS"

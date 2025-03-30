@@ -9,5 +9,11 @@ export PATH=$PATH:/usr/bin:/usr/local/bin
 /usr/bin/terraform destroy -var-file="terraform.tfvars" -auto-approve
 
 echo "destroyed" > "$STATUS_FILE"
+
 echo "" > "$TERRAFORM_STATUS"
 echo "" > "$ANSIBLE_STATUS"
+
+
+rm -rf $TERRAFORM_STATUS
+rm -rf $ANSIBLE_STATUS
+rm -rf $STATUS_FILE
