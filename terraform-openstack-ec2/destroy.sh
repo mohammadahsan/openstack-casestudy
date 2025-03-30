@@ -1,16 +1,13 @@
 #!/usr/bin/bash
 
+STATUS_FILE="/home/ubuntu/openstack-casestudy/automation/logs/status/destroy_status.txt"
+TERRAFORM_STATUS="/home/ubuntu/openstack-casestudy/automation/logs/status/terraform_status.txt"
+ANSIBLE_STATUS="/home/ubuntu/openstack-casestudy/automation/logs/status/ansible_status.txt"
 
-#!/usr/bin/bash
+export PATH=$PATH:/usr/bin:/usr/local/bin
 
-LOG_FILE="/home/ubuntu/openstack-casestudy/automation/logs/destroy.log"
+/usr/bin/terraform destroy -var-file="terraform.tfvars" -auto-approve
 
-{
-    echo "[$(/usr/bin/date)] START: Terraform Destroy"
-
-    export PATH=$PATH:/usr/bin:/usr/local/bin
-
-    /usr/bin/terraform destroy -var-file="terraform.tfvars" -auto-approve
-
-    echo "[$(/usr/bin/date)] END: Terraform Destroy"
-} >> "$LOG_FILE" 2>&1
+echo "destroyed" > "$STATUS_FILE"
+echo "" > "$TERRAFORM_STATUS"   # ← clears the provision status
+echo "" > "$ANSIBLE_STATUS"   # ← clears the provision status

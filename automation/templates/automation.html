@@ -1,17 +1,16 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>OpenStack Automation Portal</title>
+    <title>OpenStack Automation Dashboard</title>
     <style>
         body {
             font-family: Arial, sans-serif;
-            background: #f9f9f9;
             padding: 30px;
+            background-color: #f4f4f4;
         }
 
         h1 {
             color: #333;
-            font-size: 28px;
         }
 
         .button-group {
@@ -21,7 +20,7 @@
         button {
             padding: 10px 20px;
             margin: 5px;
-            background: #007bff;
+            background-color: #007bff;
             color: white;
             border: none;
             border-radius: 4px;
@@ -29,44 +28,43 @@
         }
 
         button:hover {
-            background: #0056b3;
+            background-color: #0056b3;
+        }
+
+        .status-box {
+            background: #fff;
+            border: 1px solid #ccc;
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 6px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        .status-title {
+            font-weight: bold;
+            margin-bottom: 8px;
         }
 
         pre {
-            background: #1e1e1e;
-            color: #dcdcdc;
-            padding: 15px;
-            border-radius: 5px;
-            overflow-x: auto;
-            font-size: 14px;
+            background-color: #222;
+            color: #eee;
+            padding: 10px;
+            border-radius: 4px;
+            max-height: 300px;
+            overflow-y: auto;
         }
 
-        .section {
-            margin-top: 30px;
+        ul {
+            list-style-type: none;
+            padding-left: 0;
         }
 
-        .status {
-            font-weight: bold;
-            margin-bottom: 5px;
-            color: #555;
-        }
-
-        .link-section ul {
-            margin-top: 10px;
-            list-style: none;
-            padding: 0;
-        }
-
-        .link-section ul li {
-            margin-bottom: 5px;
-        }
-
-        .link-section a {
+        ul li a {
             color: #007bff;
             text-decoration: none;
         }
 
-        .link-section a:hover {
+        ul li a:hover {
             text-decoration: underline;
         }
     </style>
@@ -82,28 +80,28 @@
         <button type="submit" name="action" value="run_ansible">Run Ansible</button>
     </form>
 
-    <div class="section">
-        <div class="status">Terraform Status: {{ terraform_status }}</div>
-        <pre>{{ terraform_output }}</pre>
+    <div class="status-box">
+        <div class="status-title">Provision Status:</div>
+        {{ terraform_status|default:"Not started" }}
     </div>
 
-    <div class="section">
-        <div class="status">Destroy Status: {{ destroy_status }}</div>
-        <pre>{{ destroy_output }}</pre>
+    <div class="status-box">
+        <div class="status-title">Destroy Status:</div>
+        {{ destroy_status|default:"Not started" }}
     </div>
 
-    <div class="section">
-        <div class="status">Ansible Status: {{ ansible_status }}</div>
-        <pre>{{ ansible_output }}</pre>
+    <div class="status-box">
+        <div class="status-title">Ansible Status:</div>
+        {{ ansible_status|default:"Not started" }}
     </div>
 
-    <div class="section">
-        <div class="status">🖥️ EC2 Instances:</div>
+    <div class="status-box">
+        <div class="status-title">🖥️ EC2 Instances:</div>
         <pre>{{ ec2_instances_output }}</pre>
     </div>
 
-    <div class="section link-section">
-        <h3>🔗 External OpenStack Links</h3>
+    <div class="status-box">
+        <div class="status-title">🔗 OpenStack Links</div>
         <ul>
             <li><a href="https://openstack1.opsbyak.com" target="_blank">openstack1.opsbyak.com</a></li>
             <li><a href="https://openstack2.opsbyak.com" target="_blank">openstack2.opsbyak.com</a></li>

@@ -1,13 +1,9 @@
 #!/usr/bin/bash
 
-LOG_FILE="/home/ubuntu/openstack-casestudy/automation/logs/ansible.log"
+STATUS_FILE="/home/ubuntu/openstack-casestudy/automation/logs/status/ansible_status.txt"
 
-{
-    echo "[$(/usr/bin/date)] START: Ansible Playbook"
+export PATH=$PATH:/usr/bin:/usr/local/bin
 
-    export PATH=$PATH:/usr/bin:/usr/local/bin
+/usr/bin/ansible-playbook playbook.yaml
 
-    /usr/bin/ansible-playbook playbook.yaml
-
-    echo "[$(/usr/bin/date)] END: Ansible Playbook"
-} >> "$LOG_FILE" 2>&1
+echo "successful" > "$STATUS_FILE"
