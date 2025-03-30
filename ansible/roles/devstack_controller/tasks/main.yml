@@ -7,20 +7,20 @@
       - python3-pip
     update_cache: yes
 
-- name: Clone DevStack repo
+- name: Clone DevStack
   git:
     repo: https://opendev.org/openstack/devstack.git
     dest: /home/ubuntu/devstack
     version: master
   become_user: ubuntu
 
-- name: Copy local.conf
+- name: Copy local.conf for controller
   template:
     src: local.conf.j2
     dest: /home/ubuntu/devstack/local.conf
   become_user: ubuntu
 
-- name: Run DevStack stack.sh
+- name: Run DevStack on controller
   shell: ./stack.sh
   args:
     chdir: /home/ubuntu/devstack

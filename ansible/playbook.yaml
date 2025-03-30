@@ -1,8 +1,18 @@
 ---
-- name: Setup OpenStack with DevStack and test connectivity
-  hosts: openstack
-  become: true
-
+- name: Ping both nodes
+  hosts: all
+  gather_facts: false
   roles:
     - ping
-    #- devstack
+
+# - name: Set up DevStack Controller
+#   hosts: controller
+#   become: true
+#   roles:
+#     - devstack_controller
+
+# - name: Set up DevStack Compute
+#   hosts: compute
+#   become: true
+#   roles:
+#     - devstack_compute

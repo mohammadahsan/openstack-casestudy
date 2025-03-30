@@ -1,0 +1,13 @@
+[[local|localrc]]
+HOST_IP={{ ansible_host }}
+SERVICE_HOST={{ ansible_host }}
+MULTI_HOST=true
+LOGFILE=stack.sh.log
+
+ADMIN_PASSWORD=devstack
+DATABASE_PASSWORD=$ADMIN_PASSWORD
+RABBIT_PASSWORD=$ADMIN_PASSWORD
+SERVICE_PASSWORD=$ADMIN_PASSWORD
+
+enable_service n-cpu
+enable_service q-agt
