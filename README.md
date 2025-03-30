@@ -5,9 +5,8 @@ This repository contains for provisioning of OpenStack on EC2 instance using Ans
 ---
 
 ### 🖱️ How to Use the Dashboard
-
-Once the dashboard is running and accessible at [https://automation.opsbyak.com](https://automation.opsbyak.com), here's how to use it:
 To Avoid Cost on my end, I created this small dashboard to spin up infrastrucutre and destroy on demand for.
+Dashboard is running and accessible at [https://automation.opsbyak.com](https://automation.opsbyak.com), here's how to use it:
 
 ![Dashboard](images/dashboard.png)
 
@@ -103,7 +102,7 @@ This setup provisions and configures a two-node OpenStack environment using Ansi
 
 ---
 
-## Ansible Directory Structure
+### Ansible Directory Structure
 
 ```
 ansible/
@@ -125,7 +124,7 @@ ansible/
 
 ---
 
-## Playbook: `playbook.yml`
+### Playbook: `playbook.yml`
 
 This playbook does the following:
 
@@ -135,7 +134,7 @@ This playbook does the following:
 
 ---
 
-## Inventory Configuration
+### Inventory Configuration
 
 ```ini
 [controller]
@@ -147,21 +146,21 @@ openstack2.opsbyak.com ansible_user=ubuntu
 
 ---
 
-## DevStack Configuration Templates
+### DevStack Configuration Templates
 
-### Controller (`local.conf.j2`)
+#### Controller (`local.conf.j2`)
 - Enables full services like Nova API, Glance, Neutron, Trove, Swift, Horizon
 - `HOST_IP` is the public IP of the controller
 - `MULTI_HOST=true` is enabled
 
-### Compute (`local.conf.j2`)
+#### Compute (`local.conf.j2`)
 - Enables Nova Compute and Neutron Agent only
 - `SERVICE_HOST` is the controller’s public IP
 - `HOST_IP` is the compute node's public IP
 
 ---
 
-## How to Run
+### How to Run
 
 ```bash
 ./run_ansible.sh
@@ -174,7 +173,7 @@ Ensure:
 
 ---
 
-## Outcome
+### Outcome
 
 - Full OpenStack environment deployed
 - Simulated high-availability and scalability using two nodes
