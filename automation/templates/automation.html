@@ -1,38 +1,114 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>OpenStack Automation</title>
+    <title>OpenStack Automation Portal</title>
     <style>
-        body { font-family: sans-serif; padding: 20px; }
-        button { margin: 10px; padding: 10px 20px; }
-        pre { background: #f5f5f5; padding: 10px; border: 1px solid #ccc; overflow: auto; }
+        body {
+            font-family: Arial, sans-serif;
+            background: #f9f9f9;
+            padding: 30px;
+        }
+
+        h1 {
+            color: #333;
+            font-size: 28px;
+        }
+
+        .button-group {
+            margin-bottom: 20px;
+        }
+
+        button {
+            padding: 10px 20px;
+            margin: 5px;
+            background: #007bff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #0056b3;
+        }
+
+        pre {
+            background: #1e1e1e;
+            color: #dcdcdc;
+            padding: 15px;
+            border-radius: 5px;
+            overflow-x: auto;
+            font-size: 14px;
+        }
+
+        .section {
+            margin-top: 30px;
+        }
+
+        .status {
+            font-weight: bold;
+            margin-bottom: 5px;
+            color: #555;
+        }
+
+        .link-section ul {
+            margin-top: 10px;
+            list-style: none;
+            padding: 0;
+        }
+
+        .link-section ul li {
+            margin-bottom: 5px;
+        }
+
+        .link-section a {
+            color: #007bff;
+            text-decoration: none;
+        }
+
+        .link-section a:hover {
+            text-decoration: underline;
+        }
     </style>
 </head>
 <body>
-    <h1>🚀 OpenStack Automation</h1>
-    <form method="post">
+
+    <h1>🚀 OpenStack Automation Dashboard</h1>
+
+    <form method="post" class="button-group">
         {% csrf_token %}
-        <button name="action" value="provision">Provision Infrastructure</button>
-        <button name="action" value="destroy">Destroy Infrastructure</button>
-        <button name="action" value="run_ansible">Run Ansible</button>
+        <button type="submit" name="action" value="provision">Provision Infrastructure</button>
+        <button type="submit" name="action" value="destroy">Destroy Infrastructure</button>
+        <button type="submit" name="action" value="run_ansible">Run Ansible</button>
     </form>
 
-    <h2>Provision Output</h2>
-    <pre>{{ terraform_output }}</pre>
+    <div class="section">
+        <div class="status">Terraform Status: {{ terraform_status }}</div>
+        <pre>{{ terraform_output }}</pre>
+    </div>
 
-    <h2>Destroy Output</h2>
-    <pre>{{ destroy_output }}</pre>
+    <div class="section">
+        <div class="status">Destroy Status: {{ destroy_status }}</div>
+        <pre>{{ destroy_output }}</pre>
+    </div>
 
-    <h2>Ansible Output</h2>
-    <pre>{{ ansible_output }}</pre>
+    <div class="section">
+        <div class="status">Ansible Status: {{ ansible_status }}</div>
+        <pre>{{ ansible_output }}</pre>
+    </div>
 
-    <h2>EC2 Instances</h2>
-    <pre>{{ ec2_instances_output }}</pre>
+    <div class="section">
+        <div class="status">🖥️ EC2 Instances:</div>
+        <pre>{{ ec2_instances_output }}</pre>
+    </div>
 
-    <h3>OpenStack Links</h3>
-    <ul>
-        <li><a href="https://openstack1.opsbyak.com" target="_blank">openstack1.opsbyak.com</a></li>
-        <li><a href="https://openstack2.opsbyak.com" target="_blank">openstack2.opsbyak.com</a></li>
-    </ul>
+    <div class="section link-section">
+        <h3>🔗 External OpenStack Links</h3>
+        <ul>
+            <li><a href="https://openstack1.opsbyak.com" target="_blank">openstack1.opsbyak.com</a></li>
+            <li><a href="https://openstack2.opsbyak.com" target="_blank">openstack2.opsbyak.com</a></li>
+        </ul>
+    </div>
+
 </body>
 </html>
