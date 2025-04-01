@@ -6,6 +6,9 @@ ANSIBLE_STATUS="/home/ubuntu/openstack-casestudy/automation/logs/status/ansible_
 
 export PATH=$PATH:/usr/bin:/usr/local/bin
 
+rm -rf .terraform/ .terraform.lock.hcl
+/usr/bin/terraform init
+
 /usr/bin/terraform destroy -var-file="terraform.tfvars" -auto-approve
 
 echo "destroyed" > "$STATUS_FILE"
