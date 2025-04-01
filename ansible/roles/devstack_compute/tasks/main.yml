@@ -11,7 +11,7 @@
   git:
     repo: https://opendev.org/openstack/devstack.git
     dest: /home/ubuntu/devstack
-    version: master
+    version: stable/2024.1
   become_user: ubuntu
 
 - name: Copy local.conf for compute
