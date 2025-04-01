@@ -1,6 +1,5 @@
 [[local|localrc]]
 HOST_IP={{ ansible_host }}
-SERVICE_HOST=openstack1.opsbyak.com
 MULTI_HOST=true
 LOGFILE=stack.sh.log
 
@@ -10,13 +9,24 @@ RABBIT_PASSWORD=$ADMIN_PASSWORD
 SERVICE_PASSWORD=$ADMIN_PASSWORD
 SWIFT_HASH=supersecretpasswordhash123
 
-# Disable legacy Neutron agents
+# Disable legacy neutron services
 disable_service q-agt
 disable_service q-l3
 disable_service q-dhcp
 disable_service q-meta
 
-# Enable OVN components and compute
+# Enable OVN services
+enable_service ovn-northd
 enable_service ovn-controller
 enable_service ovn-metadata-agent
-enable_service n-cpu
+
+# Enable controller services
+enable_service n-api
+enable_service n-cond
+enable_service n-sch
+enable_service g-api
+enable_service g-reg
+enable_service key
+enable_service horizon
+enable_service s-proxy s-object s-container s-account
+enable_service trove tr-api tr-tmgr tr-cond
