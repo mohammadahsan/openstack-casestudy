@@ -1,5 +1,11 @@
 #!/usr/bin/bash
 
+# Stash local changes (if any)
+git diff --quiet || git stash push -m "Auto-stashed before IP update"
+
+# Pull latest from origin
+git pull --rebase origin main  # or master, whichever your branch is
+
 # Vars
 CONTROLLER_NAME="openstack-ec2-1"
 COMPUTE_NAME="openstack-ec2-2"
