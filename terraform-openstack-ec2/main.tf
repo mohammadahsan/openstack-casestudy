@@ -4,8 +4,11 @@ data "aws_vpc" "default" {
 
 data "aws_subnet" "default" {
   vpc_id            = data.aws_vpc.default.id
-  availability_zone = "${var.region}a" # Adjust if needed
-  #map_public_ip_on_launch = true
+  availability_zone = "${var.region}a"
+}
+
+data "aws_route53_zone" "selected" {
+  name = var.domain_name
 }
 
 resource "aws_key_pair" "openstack_key" {
@@ -15,7 +18,7 @@ resource "aws_key_pair" "openstack_key" {
 
 resource "aws_security_group" "openstack_sg" {
   name        = "openstack-sg"
-  description = "Allow SSH, HTTP, and HTTPS"
+  description = "Allow SSH, HTTP, HTTPS, and internal VPC traffic"
   vpc_id      = data.aws_vpc.default.id
 
   ingress {
@@ -44,7 +47,9 @@ resource "aws_security_group" "openstack_sg" {
     from_port   = 0
     to_port     = 0
     protocol    = "-1"
-    cidr_blocks = [data.aws_vpc.default.cidr_block]
+    cidr_blocks = [
+      for assoc in data.aws_vpc.default.cidr_block_associations : assoc.cidr_block
+    ]
   }
 
   egress {
@@ -85,8 +90,4 @@ resource "aws_route53_record" "openstack_dns" {
   type    = "A"
   ttl     = 300
   records = [aws_instance.openstack_ec2[count.index].public_ip]
-}
-
-data "aws_route53_zone" "selected" {
-  name = var.domain_name
 }
