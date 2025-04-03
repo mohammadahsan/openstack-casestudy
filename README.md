@@ -20,6 +20,8 @@ Dashboard is running and accessible at [https://automation.opsbyak.com](https://
 
 ![Dashboard](images/dashboard.png)
 once Complete Openstack will be available on the first url.
+<img width="1797" alt="image" src="https://github.com/user-attachments/assets/f2ee63b2-d815-473f-9c56-309dd0016a60" />
+
 ![image](https://github.com/user-attachments/assets/4c9a4302-d11d-43a7-84be-aff7241ffee2)
 <img width="1300" alt="image" src="https://github.com/user-attachments/assets/38fadb2b-eb77-471b-b639-1ac4ba403286" />
 
